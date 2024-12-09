@@ -60,6 +60,17 @@ def create_calendar(start_date, work_days, rest_days):
         # Заполняем дни месяца
         current_row = start_row + 2
         current_col = start_col
+
+        # Определяем, на какой день недели начинается месяц
+        first_day_of_month = month_start.weekday()  # 0 - понедельник, 6 - воскресенье
+
+        # Заполняем пустые ячейки до первого дня месяца
+        for _ in range(first_day_of_month):
+            cell = ws.cell(row=current_row, column=current_col)
+            cell.value = ""
+            cell.border = thin_border
+            current_col += 1
+
         for day in range(1, month_days + 1):
             current_date = date(start_date.year, month_idx + 1, day)
             is_work = is_work_day(current_date, start_date, work_days, rest_days)
